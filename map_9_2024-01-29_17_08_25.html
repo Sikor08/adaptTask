@@ -1,0 +1,631 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Импортозамещение 2023" />
+    <meta property="og:image" content="https://filearchive.cnews.ru/img/cnews/2023/02/16/img1.png" />
+    <meta property="og:description" content="Аппаратное обеспечение" />
+    <meta name="description" content="Аппаратное обеспечение" />
+    <meta name="keywords" content="карта" />
+    <title>Импортозамещение 2023. Аппаратное обеспечение</title>
+    <link rel="stylesheet" type="text/css" href="https://www.cnews.ru/inc/static/maps/fonts.css">
+  	<link rel="stylesheet" type="text/css" href="https://www.cnews.ru/inc/static/maps/bootstrap_5.3.0.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://www.cnews.ru/inc/map_editor/assets/gridster/jquery.gridster.css">
+    <style>
+        body.map-page {
+            color: #B454FF;
+            font-family: "Roboto Slab", serif;
+        }
+
+        .site-wrapper {
+            background: url("https://filearchive.cnews.ru/img/cnews/2022/05/25/importozameshchenie_2023.png");
+            background-size: cover;
+            min-height: 100%;
+            overflow: hidden;
+            clear: both;
+            position: absolute;
+        }
+
+        .site-wrapper-inner {
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        h1.map-title {
+            color: #ffffff;
+        }
+
+        h4.map-desc {
+            color: #ffffff;
+        }
+
+        .map-structure {
+            height: calc(100vh - 237px);
+            width: 100%;
+            max-width: 100vw;
+            overflow: auto;
+            position: relative;
+        }
+
+        .sticky {
+            position: -webkit-sticky;
+            position: sticky;
+        }
+
+        .btn-group-zoom-container {
+            position: -webkit-sticky;
+            position: sticky;
+            top: .7rem;
+            left: 0;
+            z-index: 10;
+            width: -moz-fit-content;
+            width: fit-content;
+            background-color: rgba(241, 241, 241, 0.8);
+            padding: 4px;
+            text-align: center;
+            border-radius: 1.5rem;
+        }
+
+        .zoom-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-zoom {
+            height: 36px;
+            width: 36px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .zoom-indicator {
+            text-align: center;
+            font-size: 12px;
+            font-weight: normal;
+            padding: 4px 0;
+            color: #333;
+        }
+
+        .logo-groups-container {
+            position: absolute;
+            top: 0;
+            left: 2.5rem;
+            z-index: 0;
+            height: calc(100vh - 255px);
+            width: calc(100vw - 150px);
+        }
+
+        .gridster .gs-w {
+            /*cursor: pointer;*/
+            padding: 1rem;
+        }
+
+        .gridster .player {
+            -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            background: #BBB;
+        }
+
+        .gridster .gs-w.try {
+            background-color: #0dcaf0;
+            background-repeat: no-repeat;
+        }
+
+        .gridster .preview-holder {
+            border: none !important;
+            border-radius: 0 !important;
+            background: red !important;
+        }
+
+        .gridster {
+            min-height: calc(100vh - 255px);
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            list-style: none;
+            font-weight: bold;
+        }
+
+        .group-title {
+            font-weight: 700;
+            font-size: .85rem;
+            line-height: 126.38%;
+            z-index: 10;
+            position: relative;
+            display: inline-block;
+            text-align: left !important;
+            margin-top: .5rem;
+            margin-bottom: .5rem;
+        }
+
+        .subgroup-title {
+            font-weight: 700;
+            font-size: .67rem;
+            z-index: 10;
+            position: relative;
+            display: inline-block;
+            text-align: left !important;
+            margin-top: .5rem;
+            margin-bottom: .5rem;
+            color: #fff;
+        }
+
+        ul.nested-ul {
+            padding: 0;
+        }
+
+        ul.logo-container {
+            padding: 0;
+            flex-wrap: wrap;
+            gap: 5px;
+            position: relative;
+        }
+
+        li.logo-item {
+            display: inline-block;
+            vertical-align: middle;
+            width: 130px;
+            height: auto;
+            clear: both;
+            position: relative;
+            zoom: 1;
+            padding: 4px;
+            border: 1px solid #ddd;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+            -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+            background-color: #ffffff;
+        }
+
+        li.logo-item img {
+            vertical-align: unset;
+        }
+
+        li.logo-item img.mono-mode {
+            filter: unset;
+            filter: grayscale(100%) brightness(50%);
+        }
+
+        #logo-groups {
+            padding: 0;
+          	transform-origin: 0% 0%;
+        }
+
+        .subgroups-container {
+            display: flex;
+            gap: 10px;
+            /*flex-flow: row nowrap;*/
+            flex-flow: row wrap;
+        }
+        ::-webkit-scrollbar {
+            height: 12px;
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #74cdff;
+            border-color: #fff;
+            border-style: solid;
+            border-width: 0 0 0 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #B454FF;
+            border-radius: 20px;
+            border: 2px solid #74cdff;
+            border-top-width: 3px;
+        }
+    </style>
+</head>
+<body class="map-page">
+    <div class="site-wrapper w-100 h-100">
+        <div class="site-wrapper-inner w-100 h-100 m-0 p-0">
+            <header class="navbar sticky-top">
+                <nav class="container-fluid flex-wrap py-3 px-5">
+                    <div class="justify-content-end">
+                        <h1 class="map-title">Импортозамещение 2023</h1>
+                        <h4 class="map-desc">Аппаратное обеспечение*</h4>
+                    </div>
+                    <a href="https://www.cnews.ru/" target="_blank" class="navbar-brand mb-0 logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 98.068 25.881">
+                            <g id="logo" transform="translate(-138.709 -404.32)">
+                                <path id="Контур_354" data-name="Контур 354"
+                                    d="M11.084-24.332H8.369l-.7-2.058H3.89l-.7,2.058H.539L4.3-34.515H7.323ZM7.029-28.258,5.778-31.909,4.526-28.258Zm13.1,3.925H17.649v-3.809a8.977,8.977,0,0,0-.048-.927,1.952,1.952,0,0,0-.164-.68.819.819,0,0,0-.4-.369,1.868,1.868,0,0,0-.735-.116,2.244,2.244,0,0,0-.68.109,3.655,3.655,0,0,0-.749.349v5.443H12.411v-7.679h2.462v.848a6.281,6.281,0,0,1,1.262-.786,3.226,3.226,0,0,1,1.344-.274,2.58,2.58,0,0,1,1.945.725,3.006,3.006,0,0,1,.7,2.168Zm6.914-2v-1.6q-.5.041-1.08.113a5.205,5.205,0,0,0-.882.168,1.215,1.215,0,0,0-.564.338.855.855,0,0,0-.195.585,1.522,1.522,0,0,0,.041.39.586.586,0,0,0,.205.287,1,1,0,0,0,.376.2,2.613,2.613,0,0,0,.684.065,2.022,2.022,0,0,0,.749-.15A2.339,2.339,0,0,0,27.038-26.336Zm0,1.19q-.2.15-.492.362a3.585,3.585,0,0,1-.554.335,3.492,3.492,0,0,1-.752.243,4.328,4.328,0,0,1-.855.079,2.61,2.61,0,0,1-1.833-.677,2.243,2.243,0,0,1-.739-1.73,2.332,2.332,0,0,1,.376-1.374,2.523,2.523,0,0,1,1.067-.841,6.03,6.03,0,0,1,1.7-.438q1.012-.13,2.1-.191v-.041a.885.885,0,0,0-.52-.879A3.758,3.758,0,0,0,25-30.542a4.373,4.373,0,0,0-1.3.215q-.691.215-.992.332h-.226v-1.853q.39-.1,1.269-.243a11.16,11.16,0,0,1,1.761-.14,5.465,5.465,0,0,1,3.033.646,2.293,2.293,0,0,1,.933,2.028v5.224H27.038Zm7.167.814H31.743v-10.64H34.2ZM40-27.047l1.751-4.965h2.53l-4.267,10.5H37.343l1.217-2.872-2.988-7.625h2.585ZM50.555-24.4a6.968,6.968,0,0,1-.841.161,8.577,8.577,0,0,1-1.087.058,3.3,3.3,0,0,1-2.137-.581,2.459,2.459,0,0,1-.7-1.99v-3.59H44.776v-1.669h1.012v-2.2H48.25v2.2h2.3v1.669h-2.3v2.722q0,.4.007.7a1.444,1.444,0,0,0,.109.54A.757.757,0,0,0,48.7-26a1.439,1.439,0,0,0,.708.14,2.075,2.075,0,0,0,.5-.082,2.092,2.092,0,0,0,.434-.15h.205Zm3.932.068H52.025v-7.679h2.462Zm.068-8.774h-2.6v-1.867h2.6Zm6.257,8.979a6.619,6.619,0,0,1-1.836-.239,4.042,4.042,0,0,1-1.446-.739,3.347,3.347,0,0,1-.944-1.258,4.372,4.372,0,0,1-.335-1.778,4.4,4.4,0,0,1,.359-1.853,3.5,3.5,0,0,1,1-1.292A4.078,4.078,0,0,1,59.048-32a6.291,6.291,0,0,1,1.689-.226,5.8,5.8,0,0,1,1.45.171,6.845,6.845,0,0,1,1.238.444v2.1h-.349q-.144-.123-.345-.287a3.114,3.114,0,0,0-.5-.321,3.246,3.246,0,0,0-.615-.25,2.757,2.757,0,0,0-.78-.1,1.875,1.875,0,0,0-1.515.626,2.545,2.545,0,0,0-.53,1.7,2.359,2.359,0,0,0,.544,1.682,2.021,2.021,0,0,0,1.542.574,3.062,3.062,0,0,0,.838-.106,2.7,2.7,0,0,0,.619-.25,2.947,2.947,0,0,0,.41-.287q.178-.15.328-.294h.349v2.1a6.743,6.743,0,0,1-1.214.434A5.678,5.678,0,0,1,60.812-24.127Zm10.914-2.64a2.226,2.226,0,0,1-1.067,1.918,5.115,5.115,0,0,1-2.92.728,8.331,8.331,0,0,1-1.86-.191,7.09,7.09,0,0,1-1.34-.424V-26.76h.226q.185.13.427.284a4.342,4.342,0,0,0,.687.332,5.669,5.669,0,0,0,.868.27,4.583,4.583,0,0,0,1.039.113,2.7,2.7,0,0,0,1.074-.161.511.511,0,0,0,.349-.475A.442.442,0,0,0,69-26.8a2.676,2.676,0,0,0-.78-.243q-.274-.062-.742-.133a7.974,7.974,0,0,1-.851-.174,3.018,3.018,0,0,1-1.552-.851,2.106,2.106,0,0,1-.506-1.439,2.184,2.184,0,0,1,1.05-1.843,4.927,4.927,0,0,1,2.869-.735,7.641,7.641,0,0,1,1.651.174,6.682,6.682,0,0,1,1.234.373v1.942h-.212a5.01,5.01,0,0,0-1.248-.612,4.421,4.421,0,0,0-1.419-.236,2.687,2.687,0,0,0-1,.164q-.407.164-.407.465a.5.5,0,0,0,.185.417,2.512,2.512,0,0,0,.868.287q.376.075.81.147t.872.181a2.74,2.74,0,0,1,1.436.8A2.015,2.015,0,0,1,71.726-26.767Z"
+                                    transform="translate(165.051 451.716)" fill="rgb(255, 255, 255)"></path>
+                                <path id="Контур_355" data-name="Контур 355"
+                                    d="M7.512-23.54a6.325,6.325,0,0,1-2.1-.335,4.478,4.478,0,0,1-1.651-1,4.47,4.47,0,0,1-1.07-1.655,6.384,6.384,0,0,1-.38-2.291,6.317,6.317,0,0,1,.362-2.2A4.693,4.693,0,0,1,3.731-32.7a4.465,4.465,0,0,1,1.645-1.046,6.04,6.04,0,0,1,2.144-.369,8.47,8.47,0,0,1,1.159.072,8.034,8.034,0,0,1,.954.188,6.761,6.761,0,0,1,.831.291q.373.161.653.3V-30.8h-.3q-.191-.164-.482-.39a6.378,6.378,0,0,0-.66-.444,4.562,4.562,0,0,0-.814-.369,2.862,2.862,0,0,0-.937-.15,3.17,3.17,0,0,0-1.053.174,2.561,2.561,0,0,0-.923.578,2.839,2.839,0,0,0-.653,1.033,4.317,4.317,0,0,0-.25,1.559,4.144,4.144,0,0,0,.27,1.6,2.788,2.788,0,0,0,.68,1.012,2.488,2.488,0,0,0,.93.537,3.372,3.372,0,0,0,1.012.161,3.215,3.215,0,0,0,.947-.144,3.674,3.674,0,0,0,.865-.39,5.725,5.725,0,0,0,.622-.424q.287-.226.472-.39h.274v2.434q-.383.171-.732.321a6.022,6.022,0,0,1-.732.26,8.792,8.792,0,0,1-.937.219A7.485,7.485,0,0,1,7.512-23.54Zm14.791-.2h-2.53l-4.322-6.989v6.989H13.044V-33.92h3.139L19.9-28.087V-33.92H22.3Zm10.025-3.385H26.694a1.771,1.771,0,0,0,.687,1.381,3.057,3.057,0,0,0,1.863.479,4.189,4.189,0,0,0,1.511-.28,4.733,4.733,0,0,0,1.156-.6h.274v1.976a9.143,9.143,0,0,1-1.573.486,8.207,8.207,0,0,1-1.634.15,5.348,5.348,0,0,1-3.542-1.039A3.661,3.661,0,0,1,24.2-27.533a3.964,3.964,0,0,1,1.166-3.012,4.444,4.444,0,0,1,3.2-1.111,3.816,3.816,0,0,1,2.817.947,3.7,3.7,0,0,1,.944,2.725ZM29.88-28.566a1.723,1.723,0,0,0-.383-1.163,1.472,1.472,0,0,0-1.128-.39,1.8,1.8,0,0,0-1.169.369,1.575,1.575,0,0,0-.513,1.183Zm16.432-2.852-2.38,7.679H41.321l-1.566-5.177-1.539,5.177H35.57L33.21-31.418H35.8l1.313,5.293,1.641-5.293h2.181l1.559,5.293,1.292-5.293Zm8.144,5.245a2.226,2.226,0,0,1-1.067,1.918,5.115,5.115,0,0,1-2.92.728,8.331,8.331,0,0,1-1.86-.191,7.09,7.09,0,0,1-1.34-.424v-2.024H47.5q.185.13.427.284a4.342,4.342,0,0,0,.687.332,5.669,5.669,0,0,0,.868.27,4.583,4.583,0,0,0,1.039.113,2.7,2.7,0,0,0,1.074-.161.511.511,0,0,0,.349-.475.442.442,0,0,0-.205-.407,2.676,2.676,0,0,0-.78-.243q-.274-.062-.742-.133a7.973,7.973,0,0,1-.851-.174,3.018,3.018,0,0,1-1.552-.851,2.106,2.106,0,0,1-.506-1.439,2.184,2.184,0,0,1,1.05-1.843,4.926,4.926,0,0,1,2.869-.735,7.641,7.641,0,0,1,1.651.174,6.682,6.682,0,0,1,1.234.373v1.942H53.9a5.01,5.01,0,0,0-1.248-.612,4.422,4.422,0,0,0-1.419-.236,2.687,2.687,0,0,0-1,.164q-.407.164-.407.465a.5.5,0,0,0,.185.417,2.512,2.512,0,0,0,.868.287q.376.075.81.147t.872.181a2.74,2.74,0,0,1,1.436.8A2.015,2.015,0,0,1,54.457-26.173Z"
+                                    transform="translate(163.286 439.319)" fill="rgb(255, 255, 255)"></path>
+                                <path id="Вычитание_4" data-name="Вычитание 4"
+                                    d="M-11013.289-362.681h-24v-24h24v24Zm-12-21a9.01,9.01,0,0,0-9,9,9.01,9.01,0,0,0,9,9,9.011,9.011,0,0,0,9-9A9.011,9.011,0,0,0-11025.291-383.68Z"
+                                    transform="translate(11176 791)" fill="rgb(255, 255, 255)"></path>
+                            </g>
+                        </svg>
+                    </a>
+                </nav>
+            </header>
+            <main class="container-fluid position-relative">
+                <div class="map-structure">
+                    <div class="btn-group-zoom-container">
+                        <button class="btn btn-zoom btn-zoom-in" title="Zoom In">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="h-6 w-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </button>
+                        <div class="zoom-indicator">100%</div>
+                        <button class="btn btn-zoom btn-zoom-out" title="Zoom Out">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="h-6 w-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="logo-groups-container">
+                        <ul id="logo-groups" class="gridster"></ul>
+                    </div>
+                </div>
+            </main>
+            <footer class="navbar">
+                <div class="container-fluid flex-wrap py-3 px-5 justify-content-md-start">
+                    <div class="navbar-nav flex-column justify-content-end border-start ps-3">
+                        <span>*по состоянию на 01.08.2023</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://www.cnews.ru/inc/static/maps/jquery_3.6.0.min.js"></script>
+    <script src="https://www.cnews.ru/inc/static/maps/bootstrap.bundle_5.3.0.min.js"></script>
+    <script src="https://www.cnews.ru/inc/map_editor/assets/gridster/jquery.dsmorse-gridster.with-extras.js"></script>
+    <script>
+        let groups_has_logos, groups_tree_data, grid_settings;
+        groups_has_logos = {"1":[{"id":1758,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/icl (1).png","mono":false,"site":"","order":1,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":467,"url":"https://static.cnews.ru/img/logo_db/akvarius/akvarius.png","mono":true,"site":"","order":2,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1719,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/3logic.png","mono":false,"site":"","order":3,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1788,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/norsi_trans.jfif","mono":false,"site":"","order":4,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1726,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/asu.jfif","mono":false,"site":"","order":5,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":504,"url":"https://static.cnews.ru/img/logo_db/bajkal_ehlektroniks/bailallogo.png","mono":true,"site":"","order":6,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":897,"url":"https://static.cnews.ru/img/logo_db/npp_cifrovye_resheniya/cifrovye_resheniya.svg","mono":true,"site":"","order":7,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1823,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/vympel.png","mono":false,"site":"","order":8,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":576,"url":"https://static.cnews.ru/img/logo_db/delta_kompyuters/delta_kompyuters.svg","mono":true,"site":"","order":9,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":578,"url":"https://static.cnews.ru/img/logo_db/delta_solyushens/delta_solyushens.svg","mono":true,"site":"","order":10,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":919,"url":"https://static.cnews.ru/img/logo_db/opehnkard/orenkart.png","mono":true,"site":"","order":11,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":932,"url":"https://static.cnews.ru/img/logo_db/pkk_milandr/milandr.png","mono":true,"site":"","order":12,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1816,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/strana_kart.png","mono":false,"site":"","order":13,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":574,"url":"https://static.cnews.ru/img/logo_db/delovoj_ofis/delovoj_ofis.png","mono":true,"site":"","order":14,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1802,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/rdv.jfif","mono":false,"site":"","order":15,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1803,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/rikor.png","mono":false,"site":"","order":16,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1747,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/depo.png","mono":false,"site":"","order":17,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":741,"url":"https://static.cnews.ru/img/logo_db/isi_ran/isi.png","mono":true,"site":"","order":18,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1804,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/rotek.png","mono":false,"site":"","order":19,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":986,"url":"https://static.cnews.ru/img/logo_db/rti/rti.png","mono":true,"site":"","order":20,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1171,"url":"https://static.cnews.ru/img/logo_db/komponent_bezopasnosti/komponent_bezopasnosti.svg","mono":true,"site":"","order":21,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":795,"url":"https://static.cnews.ru/img/logo_db/kraftvehj_korporejshn/kraftvehj.png","mono":true,"site":"","order":22,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1028,"url":"https://static.cnews.ru/img/logo_db/signaltek/signaltek.png","mono":true,"site":"","order":23,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1061,"url":"https://static.cnews.ru/img/logo_db/softline/softline_we_know_logo.svg","mono":true,"site":"","order":24,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":835,"url":"https://static.cnews.ru/img/logo_db/mikron/mikron.svg","mono":true,"site":"","order":25,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1779,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/modul.png","mono":false,"site":"","order":26,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1818,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/tecon_logo.png","mono":false,"site":"","order":27,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1819,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/telekom_i_mikroehlektronik.png","mono":false,"site":"","order":28,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1775,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/mcst.png","mono":false,"site":"","order":29,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":864,"url":"https://static.cnews.ru/img/logo_db/neks-t/neks-t.svg","mono":true,"site":"","order":30,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1158,"url":"https://static.cnews.ru/img/logo_db/centr_otkrytyh_razrabotok/centr_otkrytyh_razrabotok.svg","mono":true,"site":"","order":31,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1169,"url":"https://static.cnews.ru/img/logo_db/ehlvis/ehlvis.svg","mono":true,"site":"","order":32,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":876,"url":"https://static.cnews.ru/img/logo_db/nii_eht/nii_eht.png","mono":true,"site":"","order":33,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":1782,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/nanokad.png","mono":false,"site":"","order":34,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":600,"url":"https://static.cnews.ru/img/logo_db/ehlpiteh/ehlpiteh.png","mono":true,"site":"","order":35,"enable":true,"adv_inn":"1085050005897/5052019178","company":"","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"},{"id":401,"url":"https://static.cnews.ru/img/logo_db/remer/buf_64cce3f59216c_64cce3f5921c1.png","mono":true,"site":"","order":36,"enable":true,"adv_inn":"1085050005897/5052019178","company":"Remer","adv_site":"https://srv-legion.ru","group_id":1,"adv_token":"Kra23tosP","description":"","is_description":"","adv_company_name":"«СРВ-Трейд»"}],"2":[{"id":2057,"url":"https://static.cnews.ru/img/logo_db/data_ru/dataru_tsvetnoj.png","mono":false,"site":"https://dataru.ru/","order":1,"enable":true,"adv_inn":"9725041191/1207700475950","company":"Датару","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":false,"adv_company_name":"ООО «ДАТАРУ»"},{"id":2085,"url":"https://static.cnews.ru/img/logo_db/srv_legion/srv-legion_trademark.png","mono":false,"site":"https://srv-legion.ru/","order":2,"enable":true,"adv_inn":"1085050005897/5052019178","company":"«SRV-LEGION»","adv_site":"https://srv-legion.ru/?utm_source=cnews&utm_medium=cpm&utm_campaign=atlas_servers&utm_content=logo","adv_token":"Kra23tosP","description":"«SRV-LEGION»","is_description":false,"adv_company_name":"«СРВ-Трейд»"},{"id":874,"url":"https://static.cnews.ru/img/logo_db/niagara_kompyuters/niagara.png","mono":true,"site":"","order":3,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1787,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/niicehvt.jpg","mono":false,"site":"","order":4,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1729,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/azimut.png","mono":false,"site":"","order":5,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1719,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/3logic.png","mono":false,"site":"","order":6,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1788,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/norsi_trans.jfif","mono":false,"site":"","order":7,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":467,"url":"https://static.cnews.ru/img/logo_db/akvarius/akvarius.png","mono":true,"site":"","order":8,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1759,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/icl.png","mono":false,"site":"","order":9,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1154,"url":"https://static.cnews.ru/img/logo_db/promobit/prombit_bitblaze.svg","mono":true,"site":"","order":10,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":946,"url":"https://static.cnews.ru/img/logo_db/profil_zashchity/profil_zashchity.png","mono":true,"site":"","order":11,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":492,"url":"https://static.cnews.ru/img/logo_db/atb_ehlektronika/atb.png","mono":true,"site":"","order":12,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":478,"url":"https://static.cnews.ru/img/logo_db/angstrem/angstrem.png","mono":true,"site":"","order":13,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1803,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/rikor.png","mono":false,"site":"","order":14,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1733,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/biforkom.png","mono":false,"site":"","order":15,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1734,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/biznes_sistema_telekom.png","mono":false,"site":"","order":16,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1720,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/aehro.png","mono":false,"site":"","order":17,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1808,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/sila.png","mono":false,"site":"","order":18,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":645,"url":"https://static.cnews.ru/img/logo_db/gagar_in/gagarin.png","mono":true,"site":"","order":19,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":529,"url":"https://static.cnews.ru/img/logo_db/bulat/bulat.svg","mono":true,"site":"","order":20,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1801,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/ramek.png","mono":false,"site":"","order":21,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1061,"url":"https://static.cnews.ru/img/logo_db/softline/softline_we_know_logo.svg","mono":true,"site":"","order":22,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":574,"url":"https://static.cnews.ru/img/logo_db/delovoj_ofis/delovoj_ofis.png","mono":true,"site":"","order":23,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":651,"url":"https://static.cnews.ru/img/logo_db/getmobit/getmobit.svg","mono":true,"site":"","order":24,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1048,"url":"https://static.cnews.ru/img/logo_db/skala-r/skala_r.png","mono":true,"site":"","order":25,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":235,"url":"https://static.cnews.ru/img/logo_db/triniti/triniti.png","mono":true,"site":"","order":26,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1747,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/depo.png","mono":false,"site":"","order":27,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":578,"url":"https://static.cnews.ru/img/logo_db/delta_solyushens/delta_solyushens.svg","mono":true,"site":"","order":28,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1028,"url":"https://static.cnews.ru/img/logo_db/signaltek/signaltek.png","mono":true,"site":"","order":29,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1742,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/crt.png","mono":false,"site":"","order":30,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1762,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/impuls.png","mono":false,"site":"","order":31,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1132,"url":"https://static.cnews.ru/img/logo_db/yadro_klientskie_sistemy/yadro_logo.png","mono":true,"site":"","order":32,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1775,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/mcst.png","mono":false,"site":"","order":33,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1173,"url":"https://static.cnews.ru/img/logo_db/ivk/ivk.svg","mono":true,"site":"","order":34,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1175,"url":"https://static.cnews.ru/img/logo_db/kompyuterprof/kompyuterprof.svg","mono":true,"site":"","order":35,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":769,"url":"https://static.cnews.ru/img/logo_db/katun_ehlektronika/katun.svg","mono":true,"site":"","order":36,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1509,"url":"https://static.cnews.ru/img/logo_db/vbc/buf_64ecc06ac94a6_64ecc06ac94f8.png","mono":true,"site":"","order":37,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":795,"url":"https://static.cnews.ru/img/logo_db/kraftvehj_korporejshn/kraftvehj.png","mono":true,"site":"","order":38,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":799,"url":"https://static.cnews.ru/img/logo_db/kyutehk/kyutek.png","mono":true,"site":"","order":39,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":644,"url":"https://static.cnews.ru/img/logo_db/f_tech/logo_tech-02.png","mono":true,"site":"","order":40,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1071,"url":"https://static.cnews.ru/img/logo_db/stankoservis/stankoservis.png","mono":true,"site":"","order":41,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1743,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/csi.svg","mono":false,"site":"","order":42,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1774,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/maj.png","mono":false,"site":"","order":43,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1776,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/megapolis.png","mono":false,"site":"","order":44,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1739,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/cbi_s.png","mono":false,"site":"","order":45,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1802,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/rdv.jfif","mono":false,"site":"","order":46,"enable":true,"adv_inn":"","company":"","adv_site":"","adv_token":"","description":"","is_description":false,"adv_company_name":""},{"id":1104,"url":"https://static.cnews.ru/img/logo_db/utinet/utinet.png","mono":true,"site":"","order":47,"enable":true,"adv_inn":"","company":"","adv_site":"","group_id":2,"adv_token":"","description":"","is_description":false,"adv_company_name":""}],"3":[{"id":2057,"url":"https://static.cnews.ru/img/logo_db/data_ru/dataru_tsvetnoj.png","mono":false,"site":"https://dataru.ru/","order":1,"enable":true,"adv_inn":"9725041191/1207700475950","company":"Датару","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":false,"adv_company_name":"ООО «ДАТАРУ»"},{"id":594,"url":"https://static.cnews.ru/img/logo_db/dzhiehs_nanoteh/dzhiehs_nanoteh.png","mono":true,"site":"","order":3,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":3,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":795,"url":"https://static.cnews.ru/img/logo_db/kraftvehj_korporejshn/kraftvehj.png","mono":true,"site":"","order":4,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":3,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1720,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/aehro.png","mono":false,"site":"","order":5,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1747,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/depo.png","mono":false,"site":"","order":6,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":644,"url":"https://static.cnews.ru/img/logo_db/f_tech/logo_tech-02.png","mono":true,"site":"","order":7,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":3,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1132,"url":"https://static.cnews.ru/img/logo_db/yadro_klientskie_sistemy/yadro_logo.png","mono":true,"site":"","order":8,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":3,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1788,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/norsi_trans.jfif","mono":false,"site":"","order":9,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1048,"url":"https://static.cnews.ru/img/logo_db/skala-r/skala_r.png","mono":true,"site":"","order":10,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":3,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":897,"url":"https://static.cnews.ru/img/logo_db/npp_cifrovye_resheniya/cifrovye_resheniya.svg","mono":true,"site":"","order":11,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":3,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":2085,"url":"https://static.cnews.ru/img/logo_db/srv_legion/srv-legion_trademark.png","mono":false,"site":"https://srv-legion.ru/","order":2,"enable":true,"adv_inn":"1085050005897/5052019178","company":"«SRV-LEGION»","adv_site":"https://srv-legion.ru/catalog/sistemyi_hraneniya_dannyih/shd_sunstor/?utm_source=cnews&utm_medium=cpm&utm_campaign=atlas_SHD&utm_content=logo","adv_token":"Kra23tosP","description":"«SRV-LEGION»","is_description":false,"adv_company_name":"«СРВ-Трейд»"}],"4":[{"id":1164,"url":"https://static.cnews.ru/img/logo_db/sber_devices/sber_devices.png","mono":false,"site":"","order":1,"enable":true,"adv_inn":"9725041191/1207700475950","company":"SberDevices","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1729,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/azimut.png","mono":false,"site":"","order":2,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":795,"url":"https://static.cnews.ru/img/logo_db/kraftvehj_korporejshn/kraftvehj.png","mono":true,"site":"","order":3,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1772,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/lajtkom.png","mono":false,"site":"","order":4,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1723,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/aktiv.png","mono":false,"site":"","order":5,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":864,"url":"https://static.cnews.ru/img/logo_db/neks-t/neks-t.svg","mono":true,"site":"","order":6,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1795,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/parus.png","mono":false,"site":"","order":7,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":689,"url":"https://static.cnews.ru/img/logo_db/ikar/ikar.png","mono":true,"site":"","order":8,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1764,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/intek.jpg","mono":false,"site":"","order":9,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":953,"url":"https://static.cnews.ru/img/logo_db/prosoft-biometriks/prosoft_logo.png","mono":true,"site":"","order":10,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1799,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/prosoft_pk.jpg","mono":false,"site":"","order":11,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1802,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/rdv.jfif","mono":false,"site":"","order":12,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1040,"url":"https://static.cnews.ru/img/logo_db/sistemotehnika/sistemotehnika.svg","mono":true,"site":"","order":13,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":601,"url":"https://static.cnews.ru/img/logo_db/ehnergomash/ehnergomash.png","mono":true,"site":"","order":14,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":644,"url":"https://static.cnews.ru/img/logo_db/f_tech/logo_tech-02.png","mono":true,"site":"","order":15,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1042,"url":"https://static.cnews.ru/img/logo_db/sistemy_papilon/papilon.jfif","mono":false,"site":"","order":16,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1048,"url":"https://static.cnews.ru/img/logo_db/skala-r/skala_r.png","mono":true,"site":"","order":17,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1166,"url":"https://static.cnews.ru/img/logo_db/biehm_grupp_fabrika_innovacij/biehm_grupp_fabrika_innovacij.svg","mono":true,"site":"","order":18,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":4,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"}],"5":[{"id":2057,"url":"https://static.cnews.ru/img/logo_db/data_ru/dataru_tsvetnoj.png","mono":false,"site":"https://dataru.ru/","order":1,"enable":true,"adv_inn":"9725041191/1207700475950","company":"Датару","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":false,"adv_company_name":"ООО «ДАТАРУ»"},{"id":493,"url":"https://static.cnews.ru/img/logo_db/atg/atg.png","mono":true,"site":"","order":2,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1091,"url":"https://static.cnews.ru/img/logo_db/trehi/trehi.png","mono":true,"site":"","order":3,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1788,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/norsi_trans.jfif","mono":false,"site":"","order":4,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":903,"url":"https://static.cnews.ru/img/logo_db/ntc_protej/ntc_protej.svg","mono":true,"site":"","order":5,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1163,"url":"https://static.cnews.ru/img/logo_db/fajbertrejd/fajbertrejd_future_technologies.png","mono":true,"site":"","order":6,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1763,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/infoteks2.png","mono":false,"site":"","order":7,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":688,"url":"https://static.cnews.ru/img/logo_db/iehk_holding/iek.gif","mono":true,"site":"","order":8,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1789,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/npo_mir.png","mono":false,"site":"","order":9,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":904,"url":"https://static.cnews.ru/img/logo_db/ntpk/ntpk.png","mono":true,"site":"","order":10,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1790,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/ntc_pik.png","mono":false,"site":"","order":11,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":595,"url":"https://static.cnews.ru/img/logo_db/ehlektra/ehlektra.png","mono":true,"site":"","order":12,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1739,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/cbi_s.png","mono":false,"site":"","order":13,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":795,"url":"https://static.cnews.ru/img/logo_db/kraftvehj_korporejshn/kraftvehj.png","mono":true,"site":"","order":14,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1750,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/ehlektron.png","mono":false,"site":"","order":15,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1800,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/prosoft_sistemy.png","mono":false,"site":"","order":16,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":780,"url":"https://static.cnews.ru/img/logo_db/kod_bezopasnosti/ajsiehl_1.svg","mono":true,"site":"","order":17,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":601,"url":"https://static.cnews.ru/img/logo_db/ehnergomash/ehnergomash.png","mono":true,"site":"","order":18,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":799,"url":"https://static.cnews.ru/img/logo_db/kyutehk/kyutek.png","mono":true,"site":"","order":19,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1162,"url":"https://static.cnews.ru/img/logo_db/moduli_svyazi/moduli_svyazi.svg","mono":true,"site":"","order":20,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1005,"url":"https://static.cnews.ru/img/logo_db/s-terra_siehspi_2/sterra.svg","mono":true,"site":"","order":21,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1817,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/svyazstrojdetal.png","mono":false,"site":"","order":22,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1028,"url":"https://static.cnews.ru/img/logo_db/signaltek/signaltek.png","mono":true,"site":"","order":23,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1731,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/bi.zone-logo_dark-01_on-white.png","mono":false,"site":"","order":24,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1754,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/ehridan.png","mono":false,"site":"","order":25,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":867,"url":"https://static.cnews.ru/img/logo_db/neoros/neoros.png","mono":true,"site":"","order":26,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":644,"url":"https://static.cnews.ru/img/logo_db/f_tech/logo_tech-02.png","mono":true,"site":"","order":27,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1045,"url":"https://static.cnews.ru/img/logo_db/sitri_solyushnz/sitri.svg","mono":true,"site":"","order":28,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1781,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/mosobltelemat.png","mono":false,"site":"","order":29,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":373,"url":"https://static.cnews.ru/img/logo_db/iva_technologies/buf_64ccc5b3efdbe_64ccc5b3efe18.png","mono":true,"site":"","order":30,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":401,"url":"https://static.cnews.ru/img/logo_db/remer/buf_64cce3f59216c_64cce3f5921c1.png","mono":true,"site":"","order":31,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":897,"url":"https://static.cnews.ru/img/logo_db/npp_cifrovye_resheniya/cifrovye_resheniya.svg","mono":true,"site":"","order":32,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","group_id":5,"adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"},{"id":1815,"url":"https://static.cnews.ru/img/logo_db/apparatnoe_obespechenie_iz_2023_mono/str.png","mono":false,"site":"","order":33,"enable":true,"adv_inn":"9725041191/1207700475950","company":"","adv_site":"https://dataru.ru/","adv_token":"Kra23zH42","description":"","is_description":"","adv_company_name":"ООО «ДАТАРУ»"}]};
+        groups_tree_data = [{"text":"Компоненты (процессоры, материнские платы, контроллеры и т.д.)","groupId":1},{"text":"Вычислительная техника (ноутбуки, ПК, серверы, специализированные устройства)","groupId":2},{"text":"Системы хранения данных","groupId":3},{"text":"Периферия (принтеры, ИБП, другие устройства)","groupId":4},{"text":"Сетевые и коммуникационные решения","groupId":5}];
+        grid_settings = [{"col":1,"row":1,"size_x":12,"size_y":10},{"col":13,"row":1,"size_x":20,"size_y":8},{"col":13,"row":9,"size_x":14,"size_y":4},{"col":1,"row":11,"size_x":12,"size_y":7},{"col":13,"row":13,"size_x":12,"size_y":9}];
+      console.log(grid_settings);
+	    let zoom = 1.0;
+        const zoomStep = 0.1;
+        var zoomTimeout = null;
+        function zoomIn() {
+            zoom += zoomStep;
+            updateZoom();
+        }
+        function zoomOut() {
+            zoom -= zoomStep;
+            if (zoom < zoomStep) {
+                zoom = zoomStep;
+            }
+            updateZoom();
+        }
+        function updateZoom() {
+            const contentElement = document.querySelector('#logo-groups');
+            const zoomLevelElement = document.querySelector('.zoom-indicator');
+            contentElement.style.transform = 'scale(' + zoom + ')';
+            zoomLevelElement.textContent = (zoom * 100).toFixed(0) + '%';
+        }
+        function throttle(func, limit) {
+            var inThrottle;
+            return function () {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(function () {
+                        inThrottle = false;
+                    }, limit);
+                }
+            };
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const zoomInBtn = document.querySelector('.btn-zoom-in');
+            const zoomOutBtn = document.querySelector('.btn-zoom-out');
+            zoomInBtn.addEventListener('click', throttle(zoomIn, 200));
+            zoomOutBtn.addEventListener('click', throttle(zoomOut, 200));
+        });
+    </script>
+    <script>
+    function insertNestedStructure(container, data, gridster) {
+        if (!data || data.length === 0) {
+            return;
+        }
+        $.each(data, function (i, item) {
+            if (item.nodes && item.nodes.length > 0) {
+                let liElement = $("<li>").addClass("subgroup-item");
+                let spanElement = $("<span>").addClass("subgroup-title");
+                spanElement.text(item.text);
+                liElement.append(spanElement);
+                let ulElement = $("<ul>").addClass("nested-ul row-fluid subgroups-container");
+                insertNestedStructure(ulElement, item.nodes, gridster);
+                liElement.append(ulElement);
+                container.append(liElement);
+            } else {
+                const galleryData = groups_has_logos[item.groupId] ? groups_has_logos[item.groupId] : null;
+                let liElement3 = $("<li>").addClass("subgroup-item");
+                let spanElement = $("<span>").addClass("subgroup-title");
+                spanElement.text(item.text);
+                liElement3.append(spanElement);
+                let liElement = $("<li>").addClass("logo-gallery");
+                if (galleryData) {
+                    galleryData.sort((a, b) => a.order - b.order);
+                    let ulElement = $("<ul>").addClass("logo-container row-fluid d-flex");
+                    $.each(galleryData, function (i, galleryItem) {
+                        if (galleryItem.url) {
+                            let liElement2 = $("<li>").addClass("logo-item").css({
+                                "width": "97px",
+                                "height": "28px",
+                                "border": "1.08832px solid #07709C",
+                                "border-radius": "3.26496px",
+                                "display": "flex",
+                                "justify-content": "center",
+                            });
+                            let imgElement = $("<img>").attr({
+                                src: galleryItem.url,
+                                alt: "",
+                                "data-id": galleryItem.id,
+                            }).css({
+                                "height": "100%",
+                                "width": "100%",
+                                "object-fit": "contain",
+                            });
+                            if (galleryItem.mono) {
+                                $(imgElement).addClass('mono-mode');
+                            }
+                            if (galleryItem.site) {
+                                let aElement = $("<a>").attr({
+                                    href: galleryItem.site,
+                                    target: "_blank"
+                                });
+                                if (galleryItem.company) {
+                                    $(aElement).attr({
+                                        "title": galleryItem.company
+                                    });
+                                }
+                                aElement.append(imgElement);
+                                liElement2.append(aElement);
+                                ulElement.append(liElement2);
+                            } else {
+                                liElement2.append(imgElement);
+                                ulElement.append(liElement2);
+                            }
+                        }
+                    });
+                    liElement.append(ulElement);
+                    liElement3.append(liElement);
+                    container.append(liElement3);
+                }
+            }
+        });
+    }
+    function insertRootGroups(gridster) {
+        if (!groups_tree_data || groups_tree_data.length === 0) {
+            return;
+        }
+      	var flag = 0;
+      	var mem_row = 0;
+      	var mem_col = 0;
+        $.each(groups_tree_data, function (i, item) {
+            let liElement = $("<li>").addClass("gridster-item");
+            let spanElement = $("<span>").addClass("group-title");
+            if(!item.is_description)
+            {
+              	spanElement.text(item.text);
+              	var svgCode = `
+<svg class="left-frame" width="44" height="100%" viewBox="0 0 44 424" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:relative;">
+<path d="M43 9.29161V1H1V423H43V410.291" stroke="#B454FF" stroke-width="2"/>
+</svg>
+<svg class="top-right-frame" width="8" height="9" viewBox="0 0 8 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.223633 1.60263H7.81824" stroke="#B454FF" stroke-width="2"/>
+<path d="M6.88013 0.602478L6.88013 8.19708" stroke="#B454FF" stroke-width="2"/>
+</svg>
+            `;
+            }
+          	else
+          	{
+              	spanElement.addClass("group-title-desc");
+              	var svgCode = `
+<svg class="left-frame" width="44" height="100%" viewBox="0 0 44 424" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:relative;">
+<!--path d="M43 9.29161V1H1V423H43V410.291" stroke="#B454FF" stroke-width="2"/-->
+</svg>
+<svg class="top-right-frame" width="8" height="9" viewBox="0 0 8 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!--path d="M0.223633 1.60263H7.81824" stroke="#B454FF" stroke-width="2"/-->
+<!--path d="M6.88013 0.602478L6.88013 8.19708" stroke="#B454FF" stroke-width="2"/-->
+</svg>
+            `;
+          	}
+            $(liElement).html(svgCode);
+            const svg = $(liElement).find("svg.left-frame")
+                .css({
+                    "position": "absolute",
+                    "margin-top": "-1rem",
+                    "margin-left": "-1rem"
+                })
+                .on("load", function () {
+                    let actualHeight = $(this).height();
+                    $(this).attr("viewBox", `0 0 44 ${actualHeight}`);
+                    $(this).find("path").attr("d", `M43 9.29161V1H1V${actualHeight - 1}H43V${(actualHeight - 1 - 12.709)}`);
+                });
+            $(liElement).find("svg.top-right-frame").css({
+                "position": "absolute",
+                "top": 0,
+                "right": 0
+            });
+            const resizeObserver = new ResizeObserver(entries => {
+                for (const entry of entries) {
+                    if (entry.target === svg[0]) {
+                        let actualHeight = $(entry.target).height();
+                        $(entry.target).attr("viewBox", `0 0 44 ${actualHeight}`);
+                        $(entry.target).find("path").attr("d", `M43 9.29161V1H1V${actualHeight - 1}H43V${(actualHeight - 1 - 12.709)}`);
+                    }
+                }
+            });
+            resizeObserver.observe(svg[0]);
+            liElement.append(spanElement);
+            if (item.nodes && item.nodes.length > 0) {
+                let ulElement = $("<ul>").addClass("nested-ul row-fluid subgroups-container");
+                insertNestedStructure(ulElement, item.nodes, groups_has_logos, gridster);
+                liElement.append(ulElement);
+                let sizeX = 3;
+                let sizeY = 5;
+                let col, row;
+                if (grid_settings && grid_settings.length > i) {
+                    sizeX = grid_settings[i].size_x;
+                    sizeY = grid_settings[i].size_y;
+                    col = grid_settings[i].col;
+                    row = grid_settings[i].row;
+                    gridster.add_widget(liElement, sizeX, sizeY, col, row);
+                } else {
+                    gridster.add_widget(liElement, sizeX, sizeY);
+                }
+            } else {
+                const galleryData = groups_has_logos[item.groupId] ? groups_has_logos[item.groupId] : null;
+                if (galleryData) {
+                    galleryData.sort((a, b) => a.order - b.order);
+                    let ulElement = $("<ul>").addClass("logo-container row-fluid d-flex");
+                    $.each(galleryData, function (i, galleryItem) {
+                        if (galleryItem.url) {
+                            if(galleryItem.is_description)
+                            {
+                              	var liElement2 = $("<li>").addClass("logo-item").css({
+                                  "width": "400px",
+                                  "height": "100%",
+                                  "border": "1.08832px solid #07709C",
+                                  "border-radius": "3.26496px",
+                                  "justify-content": "center",
+                                  "padding": "10px",
+                              });
+                              var imgW = '200px';
+                            }
+                          	else
+                            {
+                            	var liElement2 = $("<li>").addClass("logo-item").css({
+                                  "width": "97px",
+                                  "height": "28px",
+                                  "border": "1.08832px solid #07709C",
+                                  "border-radius": "3.26496px",
+                                  "display": "flex",
+                                  "justify-content": "center",
+                              });
+                              var imgW = '100%';
+                            }
+
+                          	let ep = document.createElement('p');
+                          	ep.setAttribute('class', "description");
+                          	ep.setAttribute('style', "font-size:10px;width:380px;text-align:justify;");
+                            ep.innerHTML = galleryItem.description;
+                              /*.css({
+    							'font-size': '10px',
+    							'line-height': '126.38%'}).*/
+
+                          	let imgElement = $("<img>").attr({
+                                src: galleryItem.url,
+                                alt: "",
+                                "data-id": galleryItem.id,
+                            }).css({
+                                "width": imgW,
+                                "height": "100%",
+                                "object-fit": "contain",
+                            });
+                            if (galleryItem.mono) {
+                                $(imgElement).addClass('mono-mode');
+                            }
+                            if (galleryItem.site) {
+                                const aElement = $("<a>").attr({
+                                    href: galleryItem.site,
+                                    target: "_blank"
+                                });
+                                if (galleryItem.company) {
+                                    $(aElement).attr({
+                                        "title": galleryItem.company
+                                    });
+                                }
+                                aElement.append(imgElement);
+                                liElement2.append(aElement);
+                              	if(galleryItem.is_description)
+                                {
+                              		liElement2.append(ep);
+                                }
+                                ulElement.append(liElement2);
+                            } else {
+                                liElement2.append(imgElement);
+                              	if(galleryItem.is_description)
+                                {
+                              		liElement2.append(ep);
+                                }
+                                ulElement.append(liElement2);
+                            }
+                        }
+                    });
+                    liElement.append(ulElement);
+                    let sizeX = 3;
+                    let sizeY = 5;
+                    let col, row;
+                    if (grid_settings && grid_settings.length > i) {
+                        sizeX = grid_settings[i].size_x;
+                        sizeY = grid_settings[i].size_y;
+                        col = grid_settings[i].col;
+                        row = grid_settings[i].row;
+                      	if(item.is_description && !flag)
+                        {
+                        	mem_row = row;
+                          	mem_col = col;
+                            flag = 1;
+                        }
+                      	else if(item.is_description)
+                        {
+                        	row = mem_row + 9;
+                        }
+                        gridster.add_widget(liElement, sizeX, sizeY, col, row);
+                    } else {
+                      	if(item.is_description && !flag)
+                        {
+                        	mem_row = 1;
+                            flag = 1;
+                        }
+                      	else if(item.is_description)
+                        {
+                        	row = mem_row + 9;
+                        }
+                        gridster.add_widget(liElement, sizeX, sizeY, mem_col, row);
+                    }
+                }
+            }
+        });
+    }
+    const options = {
+        shift_widgets_up: false,
+        autogenerate_stylesheet: true,
+        autogrow_cols: true,
+        max_rows: 1000,
+        widget_base_dimensions: [20, 20],
+        widget_margins: [20, 20],
+    };
+    $(document).ready(function () {
+        const selector = '.logo-groups-container ul';
+        $('.logo-groups-container').css({ "width": "3600px", "height": "3600px" });
+        var gridster = $(selector).gridster(options).data('gridster');
+        gridster.remove_all_widgets();
+        insertRootGroups(gridster);
+        gridster.disable();
+        $('.logo-groups-container').css({ "width": $(selector).width(), "height": $(selector).height() });
+    });
+</script>
+  </body>
+</html>
